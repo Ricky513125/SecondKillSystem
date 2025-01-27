@@ -39,7 +39,7 @@ func JWTAuth() gin.HandlerFunc {
 	}
 }
 
-// JWT 签名结构
+// JWT signature
 type JWT struct {
 	SigningKey []byte
 }
@@ -51,12 +51,12 @@ var (
 	TokenMalformed   error  = errors.New("That's not even a token")
 	TokenInvalid     error  = errors.New("Couldn't handle this token:")
 	SignKey          string = "Our Seckill Secret Key"
-	Issuer 			 string = "this is a issuer"
+	Issuer           string = "this is a issuer"
 )
 
 // 载荷，可以加一些自己需要的信息
 type CustomClaims struct {
-	Username  string `json:"username"`
+	Username string `json:"username"`
 	Password string `json:"password"`
 	Kind     string `json:"kind"`
 	jwt.StandardClaims
@@ -85,7 +85,6 @@ func (j *JWT) CreateToken(claims CustomClaims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.SigningKey)
 }
-
 
 // 解析Token
 func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {

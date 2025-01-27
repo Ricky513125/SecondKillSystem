@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b3923010-f81a-423f-b63a-daffda3d8724" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/conf/conf.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/mysql.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/mysql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/jwt/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/jwt/jwt.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,15 +71,5 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="475" y="201" width="424" height="484" key="FileChooserDialogImpl" timestamp="1578316166895">
-      <screen x="67" y="27" width="1404" height="898" />
-    </state>
-    <state x="475" y="201" width="424" height="484" key="FileChooserDialogImpl/67.27.1404.898@67.27.1404.898" timestamp="1578316166895" />
-    <state x="258" y="110" key="SettingsEditor" timestamp="1578316375553">
-      <screen x="67" y="27" width="1404" height="898" />
-    </state>
-    <state x="258" y="110" key="SettingsEditor/67.27.1404.898@67.27.1404.898" timestamp="1578316375553" />
   </component>
 </project>
