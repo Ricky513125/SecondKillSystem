@@ -1,7 +1,7 @@
 package model
 
 import (
-	"crypto/md5"
+	"crypto/md5" // encode
 	"encoding/hex"
 )
 
@@ -19,30 +19,30 @@ type LoginUser struct {
 
 type RegisterUser struct {
 	LoginUser
-	Kind     string
+	Kind string
 }
 
 type User struct {
-	Id       int     `gorm:"primary_key;auto_increment"`
-	Username string  `gorm:"type:varchar(20)"`
-	Kind     string  `gorm:"type:varchar(20)"`
-	Password string  `gorm:"type:varchar(32)"`
+	Id       int    `gorm:"primary_key;auto_increment"`
+	Username string `gorm:"type:varchar(20)"`
+	Kind     string `gorm:"type:varchar(20)"`
+	Password string `gorm:"type:varchar(32)"`
 }
 
-func (user User)IsCustomer() bool {
+func (user User) IsCustomer() bool {
 	return user.Kind == NormalCustomer
 }
 
-func (user User)IsSeller() bool {
+func (user User) IsSeller() bool {
 	return user.Kind == NormalSeller
 }
 
+// check if the kind is correct or not
 func IsValidKind(kind string) bool {
 	return kind == NormalCustomer || kind == NormalSeller
 }
 
 func GetMD5(text string) string {
-	hash := md5.Sum([]byte(text))
-	return hex.EncodeToString(hash[:])
+	hash := md5.Sum([]byte(text))      // text -> []byte -> [16]byte represents the Hash result
+	return hex.EncodeToString(hash[:]) // change to 16
 }
-
