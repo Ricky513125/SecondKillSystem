@@ -18,9 +18,9 @@ func startServer(t *testing.T) (*httptest.Server, *httpexpect.Expect) {
 	// 启动服务器
 	server := httptest.NewServer(engine.SeckillEngine())
 
-	// 通过server创建测试引擎
+	// use server to create test engine
 	return server, httpexpect.WithConfig(httpexpect.Config{
-		BaseURL: server.URL,
+		BaseURL:  server.URL,
 		Reporter: httpexpect.NewAssertReporter(t),
 
 		// use http.Client with a cookie jar and timeout
@@ -50,7 +50,7 @@ func testFormat(e *httpexpect.Expect) {
 
 	// 用户名过短
 	tooShortUserName := ""
-	for i := 0; i < model.MinUserNameLen - 1; i++ {
+	for i := 0; i < model.MinUserNameLen-1; i++ {
 		tooShortUserName += "t"
 	}
 	e.POST(registerUserPath).
@@ -61,7 +61,7 @@ func testFormat(e *httpexpect.Expect) {
 
 	// 密码过短
 	tooShortPassword := ""
-	for i := 0; i < model.MinPasswordLen - 1; i++ {
+	for i := 0; i < model.MinPasswordLen-1; i++ {
 		tooShortPassword += "p"
 	}
 	e.POST(registerUserPath).
@@ -74,7 +74,7 @@ func testFormat(e *httpexpect.Expect) {
 	type BadKindRegisterForm struct {
 		Username string `form:"username"`
 		Password string `form:"password"`
-		Kind     string  `form:"kind"`
+		Kind     string `form:"kind"`
 	}
 	// 用户类型为空
 	e.POST(registerUserPath).
@@ -89,7 +89,7 @@ func testFormat(e *httpexpect.Expect) {
 		WithForm(BadKindRegisterForm{longUserName, longPassword, impossibleKind}).
 		Expect().
 		Status(http.StatusBadRequest).JSON().Object().
-		ValueEqual(api.ErrMsgKey, "Unexpected value of kind, " + impossibleKind)
+		ValueEqual(api.ErrMsgKey, "Unexpected value of kind, "+impossibleKind)
 
 }
 
@@ -108,7 +108,6 @@ func testDuplicateRegisterSeller(e *httpexpect.Expect) {
 		Status(http.StatusBadRequest).JSON().Object().
 		ValueEqual(api.ErrMsgKey, "Insert user failed. Maybe user name duplicates.")
 }
-
 
 func TestRegisterCases(t *testing.T) {
 	_, e := startServer(t)
