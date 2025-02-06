@@ -9,11 +9,12 @@ import (
 )
 
 const port = 20080
+
 func main() {
-	router := engine.SeckillEngine()  //路由跳转都写在这里
+	router := engine.SeckillEngine() // the router change
 	defer data.Close()
 
-	go func() {//可视化性能测试
+	go func() { // visualize the efficiency test
 		fmt.Println("pprof start...")
 		fmt.Println(http.ListenAndServe(":9876", nil))
 	}()
@@ -22,4 +23,3 @@ func main() {
 		println("Error when running server. " + err.Error())
 	}
 }
-

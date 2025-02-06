@@ -16,9 +16,8 @@ import (
 const ErrMsgKey = "errMsg"
 const DataKey = "data"
 
-
 // 秒杀优惠券
-func FetchCoupon(ctx *gin.Context)  	{
+func FetchCoupon(ctx *gin.Context) {
 	// 登陆检查token
 	claims := ctx.MustGet("claims").(*myjwt.CustomClaims)
 	if claims == nil {
@@ -26,7 +25,7 @@ func FetchCoupon(ctx *gin.Context)  	{
 		return
 	}
 
-	if claims.Kind == "saler"{//user.IsSeller() {
+	if claims.Kind == "saler" { //user.IsSeller() {
 		ctx.JSON(http.StatusUnauthorized, gin.H{ErrMsgKey: "Sellers aren't allowed to get coupons."})
 		return
 	}
@@ -40,7 +39,7 @@ func FetchCoupon(ctx *gin.Context)  	{
 	if err == nil {
 		//log.Println(fmt.Sprintf("result: %d", secKillRes))
 		coupon := redisService.GetCoupon(paramCouponName)
-		// 交给[协程]完成数据库写入操作
+		// give to goroutine to finish the writing operation
 		SecKillChannel <- secKillMessage{claims.Username, coupon}
 		ctx.JSON(http.StatusCreated, gin.H{ErrMsgKey: ""})
 		return
@@ -81,7 +80,7 @@ func getValidCouponSlice(allCoupons []model.Coupon, page int64) []model.Coupon {
 	}
 	couponLen := int64(len(allCoupons))
 	startIndex := page * couponPageSize
-	endIndex := page * couponPageSize + couponPageSize
+	endIndex := page*couponPageSize + couponPageSize
 	if startIndex < 0 {
 		startIndex = 0
 	} else if startIndex > couponLen {
@@ -142,7 +141,7 @@ func GetCoupons(ctx *gin.Context) {
 	//log.Printf("Querying coupon with name %s, page %d\n", queryUserName, page)
 	// TODO: 查询用户需要从缓存查，这里需要改，是有错的。在主goroutine里查询数据库，会极大的拖慢处理速度
 	// 查找对应用户
-	queryUser := model.User{Username:queryUserName}
+	queryUser := model.User{Username: queryUserName}
 	queryErr := data.Db.Where(&queryUser).
 		First(&queryUser).Error
 	if queryErr != nil {
@@ -211,15 +210,14 @@ func AddCoupon(ctx *gin.Context) {
 		return
 	}
 
-
-	if claims.Kind == "customer"{//!user.IsSeller() {
+	if claims.Kind == "customer" { //!user.IsSeller() {
 		log.Println("Only sellers can create coupons.")
 		ctx.JSON(http.StatusUnauthorized, gin.H{ErrMsgKey: "Only sellers can create coupons."})
 		return
 	}
 
 	// 检查参数
-	paramUserName := ctx.Param("username")  // 注意: 该参数是网址路径参数
+	paramUserName := ctx.Param("username") // 注意: 该参数是网址路径参数
 	var postCoupon model.ReqCoupon
 	if err := ctx.BindJSON(&postCoupon); err != nil {
 		log.Println("Only receive JSON format.")
@@ -295,12 +293,12 @@ func RegisterUser(ctx *gin.Context) {
 		return
 	} else if !model.IsValidKind(postUser.Kind) {
 		log.Println("Unexpected value of kind, ", postUser.Kind)
-			ctx.JSON(http.StatusBadRequest, gin.H{ErrMsgKey: "Unexpected value of kind, " + postUser.Kind})
-			return
+		ctx.JSON(http.StatusBadRequest, gin.H{ErrMsgKey: "Unexpected value of kind, " + postUser.Kind})
+		return
 	}
 
 	// 插入用户
-	user := model.User{Username: postUser.Username, Kind: postUser.Kind, Password: model.GetMD5(postUser.Password)}//密码用MD5加密再存储
+	user := model.User{Username: postUser.Username, Kind: postUser.Kind, Password: model.GetMD5(postUser.Password)} //密码用MD5加密再存储
 	err := data.Db.Create(&user).Error
 	if err != nil {
 		log.Println("Insert user failed. Maybe user name duplicates.")

@@ -12,8 +12,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// set the router and start the consumer goroutine
 // Visible for test
-const SessionHeaderKey =  "Authorization"
+const SessionHeaderKey = "Authorization"
 
 func SeckillEngine() *gin.Engine {
 	router := gin.New()
@@ -28,10 +29,11 @@ func SeckillEngine() *gin.Engine {
 	router.Use(sessions.Sessions(SessionHeaderKey, store))
 	gob.Register(&model.User{})
 
+	// set the router (strictly follow the interface file)
 	// 设置路由（路由只需要严格按照接口文档来写就ok了）
 	userRouter := router.Group("/api/users")
 	userRouter.POST("", api.RegisterUser) //注册
-	userRouter.Use(jwt.JWTAuth())//这些请求都需要通过jwt做用户授权
+	userRouter.Use(jwt.JWTAuth())         //这些请求都需要通过jwt做用户授权
 	{
 		userRouter.PATCH("/:username/coupons/:name", api.FetchCoupon)
 		userRouter.GET("/:username/coupons", api.GetCoupons)

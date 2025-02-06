@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b3923010-f81a-423f-b63a-daffda3d8724" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/dbService/coupon.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/dbService/coupon.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
