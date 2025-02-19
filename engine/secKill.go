@@ -19,7 +19,7 @@ const SessionHeaderKey = "Authorization"
 func SeckillEngine() *gin.Engine {
 	router := gin.New()
 
-	// 设置session为Redis存储（但是后来没有用到session，而是用jwt来做用户授权）
+	// use session to store
 	config, err := conf.GetAppConfig()
 	if err != nil {
 		panic("failed to load redisService config" + err.Error())
